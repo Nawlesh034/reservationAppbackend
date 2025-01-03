@@ -12,41 +12,38 @@ dotenv.config();
 
 // Initialize the app
 const app = express();
+// Initialize Express app first
+const PORT = process.env.PORT || 5000;
+
+// Configure middleware
+app.use(express.json({ limit: "16kb" }));
+app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cors({
-    origin:process.env.CORS_ORIGIN ,
-    optionsSuccessStatus:200,
-    credentials:true
-}))
+    origin: process.env.CORS_ORIGIN,
+    optionsSuccessStatus: 200,
+    credentials: true
+}));
 
-console.log(process.env.CORS_ORIGIN)
-
-
-connectDb()
-.then(()=>{
-    app.listen(process.env.PORT || 5000,()=>{
-        console.log(`App is listening on ${process.env.PORT}`)
-    })
-})
-.catch((err)=>{
-    console.log("Mongodb error ",err)
-})
-app.use(express.json(
-    {
-        limit:"16kb"
+// Database connection and server startup
+const startServer = async () => {
+    try {
+        await connectDb();
+        console.log("Database connected successfully");
+        
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (err) {
+        console.log("Database connection failed:", err);
+        process.exit(1);
     }
-));
-app.use(express.urlencoded({
-    extended:true,
-    limit:"16kb"
-}
-   
+};
 
-))
+startServer();
 
-
-
+// Routes
 app.get("/", (req, res) => {
-   res.json("Server is running successfully");
+    res.json("Server is running successfully");
 });
 
 // Create a new reservation
