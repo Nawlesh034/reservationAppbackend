@@ -23,7 +23,7 @@ console.log(process.env.CORS_ORIGIN)
 
 connectDb()
 .then(()=>{
-    app.listen(process.env.PORT || 8000,()=>{
+    app.listen(process.env.PORT || 5000,()=>{
         console.log(`App is listening on ${process.env.PORT}`)
     })
 })
