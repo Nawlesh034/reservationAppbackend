@@ -45,6 +45,9 @@ app.use(express.urlencoded({
 
 
 
+app.get("/", (req, res) => {
+   console.log("Server is running successfully")
+});
 
 // Create a new reservation
 app.post("/api/reservations", async (req, res) => {
