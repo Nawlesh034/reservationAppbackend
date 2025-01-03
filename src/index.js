@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json({ limit: "16kb" }));
 app.use(express.urlencoded({ extended: true, limit: "16kb" }));
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
+    origin: [process.env.CORS_ORIGIN,"http://localhost:5174"],
     optionsSuccessStatus: 200,
     credentials: true
 }));
